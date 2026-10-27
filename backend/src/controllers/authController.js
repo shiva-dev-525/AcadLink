@@ -6,11 +6,46 @@ const { generateToken } = require('../utils/jwt');
 const ALLOWED_ROLES = ['student', 'industry', 'academician', 'institution', 'admin'];
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
 
+const fs = require('fs');
+const path = require('path');
+const OFFLINE_USERS_FILE = path.join(__dirname, '../../.offline_users.json');
+
 // In-memory fallback user repository for offline/development mode when MongoDB daemon is not running
 const inMemoryUserStore = new Map();
 
+const loadOfflineUsers = () => {
+  try {
+    if (fs.existsSync(OFFLINE_USERS_FILE)) {
+      const raw = fs.readFileSync(OFFLINE_USERS_FILE, 'utf8');
+      const data = JSON.parse(raw);
+      for (const [email, user] of Object.entries(data)) {
+        inMemoryUserStore.set(email, {
+          ...user,
+          _id: new mongoose.Types.ObjectId(user._id)
+        });
+      }
+    }
+  } catch (err) {
+    // Non-critical
+  }
+};
+
+const saveOfflineUsers = () => {
+  try {
+    const obj = {};
+    for (const [email, user] of inMemoryUserStore.entries()) {
+      obj[email] = user;
+    }
+    fs.writeFileSync(OFFLINE_USERS_FILE, JSON.stringify(obj, null, 2), 'utf8');
+  } catch (err) {
+    // Non-critical
+  }
+};
+
 // Seed standard demo users with hashed passwords for seamless offline preview
 const seedDemoUsers = async () => {
+  loadOfflineUsers();
+
   const hash = await bcrypt.hash('Password123!', 10);
   const demoUsers = [
     {
@@ -52,6 +87,7 @@ const seedDemoUsers = async () => {
       inMemoryUserStore.set(u.email, u);
     }
   }
+  saveOfflineUsers();
 };
 
 seedDemoUsers();
@@ -139,6 +175,7 @@ const register = async (req, res) => {
         role: selectedRole,
       };
       inMemoryUserStore.set(normalizedEmail, user);
+      saveOfflineUsers();
     }
 
     // 4. Issue JWT

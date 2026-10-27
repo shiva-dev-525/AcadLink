@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+.offline_users.json
 
 # Dependencies
 node_modules/

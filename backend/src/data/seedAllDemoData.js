@@ -48,31 +48,31 @@ async function seedAll() {
 
   try {
     console.log('\n--- 1. Seeding Demo Users ---');
-    const passwordHash = await bcrypt.hash('Password123!', 10);
+    const demoPassword = 'Password123!';
 
     const demoUsers = [
       {
         name: 'Aarav Sharma',
         email: 'aarav.student@academia.edu',
-        password: passwordHash,
+        password: demoPassword,
         role: 'student',
       },
       {
         name: 'Priya Mehta',
         email: 'recruiter@nexiscloud.io',
-        password: passwordHash,
+        password: demoPassword,
         role: 'industry',
       },
       {
         name: 'Dr. Ramesh Kulkarni',
         email: 'faculty@academia.edu',
-        password: passwordHash,
+        password: demoPassword,
         role: 'academician',
       },
       {
         name: 'System Administrator',
         email: 'admin@academia.edu',
-        password: passwordHash,
+        password: demoPassword,
         role: 'admin',
       },
     ];
@@ -86,7 +86,7 @@ async function seedAll() {
       } else {
         user.name = u.name;
         user.role = u.role;
-        user.password = passwordHash;
+        user.password = demoPassword;
         await user.save();
         console.log(`  ✓ Updated user: ${u.email} (${u.role})`);
       }
@@ -229,7 +229,7 @@ async function seedAll() {
         openings: 2,
         deadline: days(20),
         applicationUrl: 'https://nexiscloud.io/careers/cloud-intern',
-        category: 'Cloud & DevOps',
+        category: 'Cloud',
         status: 'Active',
       },
     ];

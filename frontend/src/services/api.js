@@ -2,10 +2,20 @@ import axios from 'axios';
 
 /**
  * Centralized Axios HTTP Client
- * Uses proxy in development (/api) or environment base URL in production
+ * Uses proxy in local development (/api) or deployed backend in production
  */
+const resolveBaseUrl = () => {
+  if (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL !== '/api') {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (import.meta.env.PROD) {
+    return 'https://acad-link-pi.vercel.app/api';
+  }
+  return '/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: resolveBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },

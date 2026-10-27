@@ -162,8 +162,65 @@ export default function Login() {
           </button>
         </form>
 
+        {/* 1-Click Demo Accounts */}
+        <div className="mt-6 pt-5 border-t border-slate-800">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2.5 text-center">
+            Or Click to Auto-Fill Demo Account:
+          </span>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ email: 'aarav.student@academia.edu', password: 'Password123!' });
+                setFormErrors({});
+                setServerError('');
+              }}
+              className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-indigo-950/50 border border-slate-800 hover:border-indigo-600/50 text-left transition-all group"
+            >
+              <span className="font-bold text-cyan-300 block group-hover:text-cyan-200">👨‍🎓 Student</span>
+              <span className="text-[10px] text-slate-400 block truncate">aarav.student</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ email: 'recruiter@nexiscloud.io', password: 'Password123!' });
+                setFormErrors({});
+                setServerError('');
+              }}
+              className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-indigo-950/50 border border-slate-800 hover:border-indigo-600/50 text-left transition-all group"
+            >
+              <span className="font-bold text-indigo-300 block group-hover:text-indigo-200">🏢 Industry</span>
+              <span className="text-[10px] text-slate-400 block truncate">recruiter@nexis</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ email: 'faculty@academia.edu', password: 'Password123!' });
+                setFormErrors({});
+                setServerError('');
+              }}
+              className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-indigo-950/50 border border-slate-800 hover:border-indigo-600/50 text-left transition-all group"
+            >
+              <span className="font-bold text-emerald-300 block group-hover:text-emerald-200">📚 Faculty</span>
+              <span className="text-[10px] text-slate-400 block truncate">faculty@academia</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ email: 'admin@academia.edu', password: 'Password123!' });
+                setFormErrors({});
+                setServerError('');
+              }}
+              className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-indigo-950/50 border border-slate-800 hover:border-indigo-600/50 text-left transition-all group"
+            >
+              <span className="font-bold text-amber-300 block group-hover:text-amber-200">⚡ Admin</span>
+              <span className="text-[10px] text-slate-400 block truncate">admin@academia</span>
+            </button>
+          </div>
+        </div>
+
         {/* Footer Links */}
-        <div className="mt-6 pt-5 border-t border-slate-800 text-center">
+        <div className="mt-5 pt-4 border-t border-slate-800/80 text-center">
           <p className="text-xs text-slate-400">
             Don&apos;t have an account?{' '}
             <Link to="/register" className="font-semibold text-cyan-400 hover:text-cyan-300 hover:underline">
